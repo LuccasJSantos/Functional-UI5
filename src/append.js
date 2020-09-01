@@ -1,5 +1,5 @@
 const curry = require('./curry')
 
 module.exports = curry(
-  (args, arr) => arr.concat(args)
+  (args, arr) => [...arr, args]
 )
