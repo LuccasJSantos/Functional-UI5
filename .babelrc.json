@@ -1,3 +1,10 @@
 {
-  "presets": ["babel-preset-minify"]
+  "presets": ["babel-preset-minify"],
+  "plugins": [
+    "@babel/plugin-transform-arrow-functions",
+    "@babel/plugin-transform-destructuring",
+    "@babel/plugin-transform-parameters",
+    "@babel/plugin-transform-spread",
+    "@babel/plugin-transform-template-literals"
+  ]
 }

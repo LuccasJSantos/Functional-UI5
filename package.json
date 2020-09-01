@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack && babel dist/util.bundle.js --out-dir dist",
+    "build": "webpack && babel dist/lutil.bundle.js --out-dir dist",
     "start": "nodemon src/index.js"
   },
   "keywords": [],
@@ -14,6 +14,11 @@
   "devDependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
+    "@babel/plugin-transform-arrow-functions": "^7.10.4",
+    "@babel/plugin-transform-destructuring": "^7.10.4",
+    "@babel/plugin-transform-parameters": "^7.10.5",
+    "@babel/plugin-transform-spread": "^7.11.0",
+    "@babel/plugin-transform-template-literals": "^7.10.5",
     "babel-preset-minify": "^0.5.1",
     "eslint": "^7.7.0",
     "eslint-config-standard": "^14.1.1",
@@ -24,5 +29,6 @@
     "nodemon": "^2.0.4",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
-  }
+  },
+  "dependencies": {}
 }
