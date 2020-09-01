@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack && babel dist/lutil.bundle.js --out-dir dist",
-    "start": "nodemon src/index.js"
+    "start": "nodemon test/index.js"
   },
   "keywords": [],
   "author": "",
