@@ -1,7 +1,0 @@
-{
-  "quiet": true,
-  "watch": ["src/index.js"],
-  "events": {
-    "start": "clear"
-  }
-}
