@@ -3,7 +3,7 @@ const path = require('path')
 module.exports = {
   entry: ['./src/index.js'],
   output: {
-    filename: 'lutil.bundle.js',
+    filename: 'L.bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
   module: {
