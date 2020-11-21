@@ -63,12 +63,11 @@ const lib = {
   toUpper: require('./toUpper'),
   undef: require('./undef'),
   unless: require('./unless'),
-  when: require('./when'),
-  model: require('./ui5/model')
+  when: require('./when')
 }
 
 if (globalThis.sap) {
-  sap.ui.define([], () => lib)
+  sap.ui.define([], () => ({ ...lib, model: require('./ui5/model') }))
 } else {
   globalThis.L = lib
 }
