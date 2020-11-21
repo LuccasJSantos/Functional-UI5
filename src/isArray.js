@@ -1,1 +1,1 @@
-module.exports = args => toString.call(args) === '[object Array]'
+module.exports = Array.isArray
