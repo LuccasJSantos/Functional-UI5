@@ -3,3 +3,4 @@ dist/
 data/
 nodemon.json
 test/
+.vscode/
