@@ -12,5 +12,8 @@
     },
     "rules": {
       "curly": "off"
-    }
+		},
+		"globals": {
+			"sap": "readonly"
+		}
 }

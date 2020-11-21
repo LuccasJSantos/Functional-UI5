@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 const lib = {
   add: require('./add'),
   and: require('./and'),
