@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
-sap.ui.define([], () => ({
+
+const lib = {
   add: require('./add'),
   and: require('./and'),
   append: require('./append'),
@@ -16,6 +17,7 @@ sap.ui.define([], () => ({
   divide: require('./divide'),
   elif: require('./elif'),
   equals: require('./equals'),
+  every: require('./every'),
   evolve: require('./evolve'),
   F: require('./F'),
   filter: require('./filter'),
@@ -64,4 +66,10 @@ sap.ui.define([], () => ({
   undef: require('./undef'),
   unless: require('./unless'),
   when: require('./when')
-}))
+}
+
+if (globalThis.sap) {
+  sap.ui.define([], () => lib)
+} else {
+  globalThis.L = lib
+}
