@@ -63,7 +63,8 @@ const lib = {
   toUpper: require('./toUpper'),
   undef: require('./undef'),
   unless: require('./unless'),
-  when: require('./when')
+  when: require('./when'),
+  model: require('./ui5/model')
 }
 
 if (globalThis.sap) {
