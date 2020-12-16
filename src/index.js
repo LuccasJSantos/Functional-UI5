@@ -1,3 +1,5 @@
+require('./promise')()
+
 const lib = {
   add: require('./add'),
   and: require('./and'),
