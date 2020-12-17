@@ -5,7 +5,7 @@ module.exports = curry(
     if (!parent.setModel) {
       const error = new Error('Parent doesn\'t have \'setModel\' function')
       console.error(error)
-      throw error
+      return undefined
     }
 
     const model = new sap.ui.model.json.JSONModel(args)
