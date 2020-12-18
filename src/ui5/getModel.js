@@ -4,7 +4,7 @@ module.exports = curry(
   (parent, name) => {
     if (!parent.getModel) {
       const error = new Error('Parent doesn\'t have \'getModel\' function')
-      console.error(error)
+      console.info(error)
       return undefined
     }
 
@@ -12,7 +12,7 @@ module.exports = curry(
 
     if (!model) {
       const error = new Error(`Provided model '${name}' doesn't exist`)
-      console.error(error)
+      console.info(error)
       return undefined
     }
 
