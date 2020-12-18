@@ -1,19 +1,21 @@
 {
     "env": {
-        "commonjs": true,
-        "es2020": true,
-        "node": true
+      "commonjs": true,
+      "es2020": true,
+      "node": true
     },
     "extends": [
-        "standard"
+      "standard"
     ],
     "parserOptions": {
-        "ecmaVersion": 11
+      "ecmaVersion": 11
     },
     "rules": {
-      "curly": "off"
-		},
-		"globals": {
-			"sap": "readonly"
-		}
+      "curly": "off",
+      "no-extend-native": "off",
+      "func-call-spacing": "off"
+    },
+    "globals": {
+      "sap": "readonly"
+    }
 }
