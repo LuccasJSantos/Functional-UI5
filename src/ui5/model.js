@@ -14,7 +14,7 @@ const ui5 = {
 module.exports = curry(
   parent => ({
     ...pairWrap(
-      map(([k, fn]) => [k, fn.bind(null, parent)])
+      map(([k, fn]) => [k, fn(parent)])
     )(ui5),
     for: curry(
       name => pairWrap(
