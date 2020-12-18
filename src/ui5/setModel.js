@@ -3,8 +3,9 @@ const curry = require('../curry')
 module.exports = curry(
   (parent, name, args) => {
     if (!parent.setModel) {
-      const error = new Error('Parent doesn\'t have \'setModel\' function')
-      console.info(error)
+      console.groupCollapsed('FunctionalUI5')
+      console.trace('Parent doesn\'t have \'setModel\' function')
+      console.groupEnd()
       return undefined
     }
 
