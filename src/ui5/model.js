@@ -10,7 +10,12 @@ const ui5 = {
   getData: require('./getData'),
   setData: require('./setData'),
   assignTo: require('./assignTo'),
-  pushTo: require('./pushTo')
+  pushTo: require('./pushTo'),
+  map: require('./map'),
+  filter: require('./filter'),
+  reduce: require('./reduce'),
+  compose: require('./compose'),
+  pipe: require('./pipe')
 }
 
 module.exports = curry(
