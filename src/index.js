@@ -7,6 +7,7 @@ const lib = {
   apply: require('./apply'),
   assoc: require('./assoc'),
   bind: require('./bind'),
+  both: require('./both'),
   call: require('./call'),
   clone: require('./clone'),
   compose: require('./compose'),
