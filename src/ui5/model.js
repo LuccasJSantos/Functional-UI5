@@ -15,7 +15,9 @@ const ui5 = {
   filter: require('./filter'),
   reduce: require('./reduce'),
   compose: require('./compose'),
-  pipe: require('./pipe')
+  pipe: require('./pipe'),
+  prop: require('./prop'),
+  pick: require('./pick')
 }
 
 module.exports = curry(
