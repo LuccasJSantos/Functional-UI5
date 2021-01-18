@@ -1,3 +1,5 @@
+require('./promise')()
+
 const lib = {
   add: require('./add'),
   and: require('./and'),
@@ -5,7 +7,9 @@ const lib = {
   apply: require('./apply'),
   assoc: require('./assoc'),
   bind: require('./bind'),
+  both: require('./both'),
   call: require('./call'),
+  clone: require('./clone'),
   compose: require('./compose'),
   composePairs: require('./composePairs'),
   cond: require('./cond'),

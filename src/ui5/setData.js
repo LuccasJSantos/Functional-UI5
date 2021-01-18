@@ -1,4 +1,5 @@
 const curry = require('../curry')
+const clone = require('../clone')
 const getModel = require('./getModel')
 
 module.exports = curry(
@@ -7,5 +8,5 @@ module.exports = curry(
 
     model.setData(args)
 
-    return model
+    return clone(args)
   })

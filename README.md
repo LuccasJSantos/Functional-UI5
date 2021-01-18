@@ -6,167 +6,513 @@ It can be easily imported just like the `utilities.js` file on controllers.
 All functions are **curried**, meaning that if the calling function **was not provided** with all the required arguments, **it will return another function** that expects the remaining arguments.
 The function itself **will be called when all the arguments are fulfilled**.
 
-So you can leverage the power of partial application with sapui5 functions.
+So you can leverage the power of partial application within sapui5 models.
 
 # UI5 functions
 
-## model : p => \{k: fn}
+## model : p => \{ k: fn }
 
 Given a parent **p**, **returns** model handler functions bound to the provided parent.
 
 **_parent examples:_**
 
-- View
-- Component
-- Fragment
+-  View
+-  Component
+-  Fragment
 
 **Usage**
 
-```javascript
-L.model(this.getView())
+_models.js_
 
-/* outputs:
-{
-	setModel: fn,
-	getModel: fn,
-	getData: fn,
-	setData: fn,
-	assignTo: fn,
-	pushTo: fn,
-	for: fn
+```javascript
+return {
+   handler: undefined,
+
+   // called from Component.js
+   init: function (comp) {
+      this.handler = L.model(comp)
+
+      console.log(this.handler)
+      /**
+       * Outputs: Functions to handle models
+       * {
+       *  assignTo: fn,
+       *  compose: fn,
+       *  filter: fn,
+       *  for: fn,
+       *  getData: fn,
+       *  getModel: fn,
+       *  map: fn,
+       *  pick: fn,
+       *  pipe: fn,
+       *  prop: fn,
+       *  pushTo: fn,
+       *  reduce: fn,
+       *  setData: fn,
+       *  setModel: fn
+       * }
+       */
+   },
 }
-*/
 ```
 
 ## setModel : s => a => JSONModel
 
-Given a name **s** and **any** data, sets model with the given name and data onto the model handler provider. **Returns** the model just set.
+Given a model name **s** and **any** data, sets model with the given name and data into the model handler provider. **Returns** the set model.
 
 **Usage**
 
+_models.js_
+
 ```javascript
-const viewHandler = L.model(this.getView())
+return {
+   // called from Component.js. The Component instance is passed as a parameter using 'this' keyword
+   init: function (comp) {
+      this.handler = L.model(comp)
+      this.handler.setModel('Todos', []) // saves list of todos
+      this.handler.setModel('Todo', {}) // saves data for new todos
 
-const model = viewHandler.setModel('Address', { zipcode: '90210' })
+      // All models are set to the Component when using 'this.handler', since the component was passed as an argument of L.model function.
 
-model.getData()
-// outputs: { zipcode: '90210' }
+      const Todos = comp.getModel('Todos')
 
-hanaPromise.then(viewHandler.setModel('Products')).then(() => {
-  this.getView().oModels
-  /* outputs: 
-		{
-			Address: constructor,
-			Products: constructor
-		}
-		*/
-})
+      console.log(Todos.getData())
+      /**
+       * Outputs: []
+       */
+   },
+}
 ```
 
 ## getModel : s => JSONModel
 
-Given a name **s**, gets model with the given name from the model handler provider.
+Given a model name **s**, gets model with the given name from the provided parent.
 
 **Usage**
 
+_Todo.controller.js_
+
 ```javascript
-const viewHandler = L.model(this.getView())
+return {
+   addTodo: function () {
+      const Todos = models.handler.getModel('Todos')
+      const todos = L.clone(Todos.getData())
 
-const model = viewHandler.setModel('Address', { zipcode: '90210' })
+      const Todo = models.handler.getModel('Todo')
+      const todo = Todo.getData()
 
-viewHandler.getModel('Address')
-// outputs: JSONModel object
+      todos.push({
+         id: 1,
+         description: todo.description,
+         checked: false,
+      })
 
-viewHandler.getModel('Address').getData()
-// outputs: { zipcode: '90210' }
+      console.log(todos)
+      /**
+       * Outputs: [{
+       *  id: 1
+       *  description: 'Do something',
+       *  checked: false
+       * }]
+       */
+   },
+}
 ```
 
-## setData : s => a => JSONModel
+## setData : s => a => b
 
-Given a name **s** and **any** data, sets data onto the given model name inside the model handler provider.
+Given a model name **s** and **any** data, sets data onto the given model name inside the model handler provider. **Returns** the set data.
 
 **Usage**
 
+_Todo.controller.js_
+
 ```javascript
-const viewHandler = L.model(this.getView())
+return {
+   addTodo: function () {
+      const Todos = models.handler.getModel('Todos')
+      const todos = L.clone(Todos.getData())
 
-let model = viewHandler.setModel('Address', {})
+      const Todo = models.handler.getModel('Todo')
+      const todo = Todo.getData()
 
-model.getData('Address')
-// outputs: { }
+      todos.push({
+         id: 1,
+         description: todo.description,
+         checked: false,
+      })
 
-model = viewhandler.setData('Address', { zipcode: '90210' })
+      models.handler.setData('Todos', todos)
 
-model.getData()
-// outputs: { zipcode: '90210' }
+      console.log(Todos.getData())
+      /**
+       * Outputs: [{
+       *  id: 1
+       *  description: 'Do something',
+       *  checked: false
+       * }]
+       */
+   },
+}
 ```
 
 ## getData : s => a
 
-Given a name **s**, fetches data from the given model name inside the model handler provider.
+Given a model name **s**, fetches data from the given model name inside the model handler provider. This function **does not** return a reference, it returns a copy of the data.
 
 **Usage**
 
+_Todo.controller.js_
+
 ```javascript
-const viewHandler = L.model(this.getView())
+return {
+   addTodo: function () {
+      const todos = models.handler.getData('Todos')
+      const todo = models.handler.getData('Todo')
 
-viewHandler.setModel('Address', { zipcode: '90210' })
+      todos.push({
+         id: 1,
+         description: todo.description,
+         checked: false,
+      })
 
-viewHandler.getData('Address')
-// outputs: { zipcode: '90210' }
+      models.handler.setData('Todos', todos)
+
+      console.log(models.handler.getData('Todos'))
+      /**
+       * Outputs: [{
+       *  id: 1
+       *  description: 'Do something',
+       *  checked: false
+       * }]
+       */
+   },
+}
 ```
 
 ## assignTo : s => \{ k: v } => \{ k: v }
 
-Given a name **s** and an object, assign the provided object to the data into the provided model from the model handler provider. **Returns** the assign result object.
+Given a model name **s** and an **object**, assign the provided object to the model data. **Returns** the assign result.
 
-\*_can also be used as an update method, since it replaces props if already exists_
+\*_can also be used as an update method, since it replaces props if them already exist_
 
 **Usage**
 
+_Todo.controller.js_
+
 ```javascript
-const viewHandler = L.model(this.getView())
+return {
+   addTodo: function () {
+      const Todo = models.handler.getModel('Todo')
 
-viewHandler.setModel('Address', { zipcode: '90210' })
+      const todos = models.handler.getData('Todo')
+      const todo = models.handler.getData('Todo')
 
-viewHandler.assignTo('Address', { city: 'California' })
+      todos.push({
+         id: 1,
+         description: todo.description,
+         checked: false,
+      })
 
-viewHandler.getData('Address')
-// outputs: { zipcode: '90210', city: 'California' }
+      models.handler.setData('Todos', todos)
+
+      console.log(Todo.getData())
+      /**
+       * Outputs: { description: 'Do something' }
+       */
+
+      models.handler.assignTo('Todo', {
+         description: '',
+         newProp: 'Hello',
+      })
+
+      console.log(Todo.getData())
+      /**
+       * Outputs: { description: '', newProp: 'Hello' }
+       */
+   },
+}
 ```
 
-## pushTo : s => a => [ ..., a ]
+## pushTo : s => a => [ a ]
 
-Given a name **s** and an object, assign the provided object to the data into the provided model from the model handler provider. **Returns** the assign result object.
+Given a model name **s** and **any** data, push the data to the model. **Returns** the push result.
 
 **Usage**
 
+_Todo.controller.js_
+
 ```javascript
-const viewHandler = L.model(this.getView())
+return {
+   addTodo: function () {
+      const todo = models.handler.getData('Todo')
 
-viewHandler.setModel('Alphabet', ['a', 'b', 'c'])
+      models.handler.pushTo('Todos', {
+         id: 1,
+         description: todo.description,
+         checked: false,
+      })
 
-viewHandler.pushTo('Alphabet', 'd')
-
-viewHandler.getData('Alphabet')
-// outputs: [ 'a', 'b', 'c', 'd' ]
+      console.log(models.handler.getData('Todos'))
+      /**
+       * Outputs: [{
+       *  id: 1
+       *  description: 'Do something',
+       *  checked: false
+       * }]
+       */
+   },
+}
 ```
 
 ## for : s => \{k: fn}
 
-Given a name **s**, **returns** model handler to the given model name.
+Given a model name **s**, return the equivalent of L.model, but with the model name bound to it. It creates the model if it doesn't exist, whose data will default to an empty object: { }
+
+This allows you to use every single function for model handling. Please, refer to L.model function at the top to see what functions are available.
+
+_Note: 'for' function will not be included as a result of calling 'for', since it has no purpose of using it in this occasion_
 
 **Usage**
 
+_models.js_
+
 ```javascript
-const viewHandler = L.model(this.getView())
+return {
+   Todos: undefined,
+   Todo: undefined,
 
-viewHandler.setModel('Address', { zipcode: '90210' })
+   // called from Component.js. The Component instance is passed as a parameter using 'this' keyword
+   init: function (comp) {
+      this.Todos = L.model(comp).for('Todos')
+      this.Todo = L.model(comp).for('Todo')
 
-const addressHandler = viewHandler.for('Address')
+      this.Todos.setData([])
+   },
+}
+```
 
-addressHandler.assignTo({ city: 'California' })
+---
 
-addressHandler.getData()
-// outputs: { zipcode: '90210', city: 'California' }
+_Todo.controller.js_
+
+```javascript
+return {
+   addTodo: function () {
+      const { description } = models.Todo.getData()
+
+      models.Todos.pushTo({
+         id: 1,
+         description: description,
+         checked: false,
+      })
+
+      console.log(models.Todos.getData())
+      /**
+       * Outputs: [{
+       *  id: 1
+       *  description: 'Do something',
+       *  checked: false
+       * }]
+       */
+   },
+}
+```
+
+## prop : s => p => a || [a]
+
+Given a model name **s** and a **prop** name, return the prop from the model data.
+Can be used with objects and arrays. When using with arrays it will **map** through the array fetching the **prop**.
+
+**Usage**
+
+_Todo.controller.js_
+
+```javascript
+return {
+   addTodo: function () {
+      const description = models.Todo.prop('description')
+
+      models.Todos.pushTo({
+         id: 1,
+         description,
+         checked: false,
+      })
+
+      console.log(models.Todos.getData())
+      /**
+       * Outputs: [{
+       *  id: 1
+       *  description: 'Do something',
+       *  checked: false
+       * }]
+       */
+   },
+}
+```
+
+## pick : s => [ps] => a || [\{ k: v }]
+
+Given a model name **s** and an array of n **props** names, return the props from the model data.
+Can be used with objects and arrays. When using with arrays it will **map** through the array fetching the **props**.
+
+**Usage**
+
+_Todo.controller.js_
+
+```javascript
+return {
+   addTodo: function () {
+      const description = models.Todo.prop('description')
+
+      models.Todos.pushTo({
+         id: 1,
+         description,
+         checked: false,
+      })
+
+      models.Todos.pushTo({
+         id: 2,
+         description,
+         checked: true,
+      })
+
+      const data = models.Todos.pick(['id', 'checked'])
+
+      console.log(data)
+      /**
+       * Outputs: [{
+       *  id: 1,
+       *  checked: false
+       * },
+       * {
+       *  id: 2,
+       *  checked: true
+       * }]
+       */
+   },
+}
+```
+
+## filter : s => (fn => a) => [ a ]
+
+Given a model name **s** and a **function**, filter the model **s** with the passed function. **Returns** data filtered with the function.
+
+**Usage**
+
+_Todo.controller.js_
+
+```javascript
+return {
+   addTodo: function () {
+      const description = models.Todo.prop('description')
+
+      models.Todos.pushTo({
+         id: 1,
+         description,
+         checked: false,
+      })
+
+      models.Todos.pushTo({
+         id: 2,
+         description,
+         checked: true,
+      })
+
+      const getCompletedOnly = todo => todo.checked
+      /**
+       * Could be:
+       * const getCompletedOnly = L.prop('checked')
+       */
+
+      const data = models.Todos.filter(getCompletedOnly)
+
+      console.log(data)
+      /**
+       * Outputs: [{
+       *  id: 2,
+       *  checked: true
+       * }]
+       */
+   },
+}
+```
+
+## map : s => (fn => a) => [ a ]
+
+Given a model name **s** and a **function**, map through the model **s** with the passed function. **Returns** data mapped with the function.
+
+**Usage**
+
+_Todo.controller.js_
+
+```javascript
+return {
+   addTodo: function () {
+      const description = models.Todo.prop('description')
+
+      models.Todos.pushTo({
+         id: 1,
+         description,
+         checked: false,
+      })
+
+      models.Todos.pushTo({
+         id: 2,
+         description: 'My Description',
+         checked: true,
+      })
+
+      const getDescriptions = todo => todo.description
+      /**
+       * Could be:
+       * const getDescriptions = L.prop('description')
+       */
+
+      const data = models.Todos.map(getDescriptions)
+
+      console.log(data)
+      /**
+       * Outputs: ['Do something', 'My Description']
+       */
+   },
+}
+```
+
+## reduce : s => (fn => a) => b => a
+
+Given a model name **s**, a **function** and an initial value **b**, reduce through the model **s** with the passed function using the initial value as the starting accumulator. **Returns** data reduced with the function.
+
+**Usage**
+
+_Todo.controller.js_
+
+```javascript
+return {
+   addTodo: function () {
+      const description = models.Todo.prop('description')
+
+      models.Todos.pushTo({
+         id: 1,
+         description,
+         checked: false,
+      })
+
+      models.Todos.pushTo({
+         id: 2,
+         description: 'My Description',
+         checked: true,
+      })
+
+      // There are better ways of doing it, this is just for demonstration purposes
+      const checkIfAllCompleted = (result, todo) => result && todo.checked
+
+      const result = models.Todos.reduce(checkIfAllCompleted, true)
+
+      console.log(result)
+      /**
+       * Outputs: false
+       */
+   },
+}
 ```
