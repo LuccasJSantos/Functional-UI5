@@ -1,12 +1,14 @@
 const curry = require('../curry')
 const pairWrap = require('../composePairs')
 const map = require('../map')
+const dissoc = require('../dissoc')
 const getModel = require('./getModel')
 const setModel = require('./setModel')
 
 const ui5 = {
   setModel: require('./setModel'),
   getModel: require('./getModel'),
+  getModelPromise: require('./getModelPromise'),
   getData: require('./getData'),
   setData: require('./setData'),
   assignTo: require('./assignTo'),
@@ -32,9 +34,11 @@ module.exports = curry(
           setModel(parent, name, undefined)
         }
 
+        const filteredOutFns = dissoc ('getModelPromise') (ui5)
+
         return pairWrap(
           map(([k, fn]) => [k, fn.bind(null, parent, name)])
-        )(ui5)
+        )(filteredOutFns)
       }
     )
   }))
