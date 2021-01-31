@@ -1,13 +1,16 @@
 const isArray = require('./isArray')
-
-const result = []
+const clone = require('./clone')
 
 const flat = arr => {
-  if (arr.length === 0) return arr
+  if (arr.length === 0) return clone(arr)
 
-  arr.forEach(item => isArray(item) ? flat(item) : result.push(item))
+  return arr.reduce((acc, item) => {
+    if (isArray(item)) {
+      return acc.concat(flat(item))
+    }
 
-  return result
+    return acc.concat(item)
+  }, [])
 }
 
 module.exports = flat
