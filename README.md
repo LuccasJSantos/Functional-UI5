@@ -265,6 +265,72 @@ return {
 }
 ```
 
+## applyTo : s => fn => a
+
+Given a model name **s** and a **function**, apply the function to the given model data. Returns the apply result.
+
+**Usage**
+
+_models.js_
+
+```javascript
+let component
+
+return {
+  init: function (comp) {
+    component = comp
+  },
+
+  getHandler: function () {
+    return L.model(component)
+  },
+
+  sendTodosToDB: todos =>
+    new Promise(res => {
+      setTimeout(() => {
+        res({
+          status: 201,
+          payload: JSON.stringify(todos),
+        })
+      }, 2000)
+    }),
+}
+```
+
+_Todo.controller.js_
+
+```javascript
+return {
+  id: 0,
+
+  init: function () {
+    const handler = models.getHandler()
+
+    handler.setModel('Todos', [
+      {
+        id: 0,
+        description: 'Hello Todo!',
+        checked: false,
+      },
+    ])
+  },
+
+  sendTodos: function () {
+    models.Todos.applyTo(models.sendTodosToDB).then(console.log)
+    /**
+      Outputs: {
+         "status": 201,
+         "payload": [{
+            "id": 0,
+            "description": "Hello Todo!",
+            "checked": false
+         }]
+      }
+   */
+  },
+}
+```
+
 ## for : s => \{k: fn}
 
 Given a model name **s**, return the equivalent of L.model, but with the model name bound to it. It creates the model if it doesn't exist, whose data will default to an empty object: { }
