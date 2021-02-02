@@ -1,4 +1,7 @@
 const curry = require('../curry')
+const modelPromises = require('./modelPromises')
+
+const JSONModel = sap.ui.model.json.JSONModel
 
 module.exports = curry(
   (parent, name, args) => {
@@ -9,9 +12,12 @@ module.exports = curry(
       return undefined
     }
 
-    const model = new sap.ui.model.json.JSONModel(args)
-
+    const model = new JSONModel(args)
     parent.setModel(model, name)
+
+    if (modelPromises[`__${name}__`]) {
+      modelPromises[`__${name}__`].resolve(args)
+    }
 
     return model
   })
