@@ -36,12 +36,14 @@ return {
     /**
      * Outputs: Functions to handle models
      * {
+     *  applyTo: fn,
      *  assignTo: fn,
      *  compose: fn,
      *  filter: fn,
      *  for: fn,
      *  getData: fn,
      *  getModel: fn,
+     *  getModelPromise: fn,
      *  map: fn,
      *  pick: fn,
      *  pipe: fn,
@@ -337,7 +339,9 @@ Given a model name **s**, return the equivalent of L.model, but with the model n
 
 This allows you to use every single function for model handling. Please, refer to L.model function at the top to see what functions are available.
 
-_Note: 'for' function will not be included as a result of calling 'for', since it has no purpose of using it in this occasion_
+_Note¹: for() won't be included as a result of calling for(), since it has no purpose of using it in this occasion_
+
+_Note²: getModelPromise() won't be include as a result of calling for(), since the model is created when using for(), making getModelPromise useless in that case_
 
 **Usage**
 
