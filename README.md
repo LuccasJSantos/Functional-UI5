@@ -16,9 +16,9 @@ Given a parent **p**, **returns** model handler functions bound to the provided 
 
 **_parent examples:_**
 
--  View
--  Component
--  Fragment
+- View
+- Component
+- Fragment
 
 **Usage**
 
@@ -26,33 +26,33 @@ _models.js_
 
 ```javascript
 return {
-   handler: undefined,
+  handler: undefined,
 
-   // called from Component.js
-   init: function (comp) {
-      this.handler = L.model(comp)
+  // called from Component.js
+  init: function (comp) {
+    this.handler = L.model(comp)
 
-      console.log(this.handler)
-      /**
-       * Outputs: Functions to handle models
-       * {
-       *  assignTo: fn,
-       *  compose: fn,
-       *  filter: fn,
-       *  for: fn,
-       *  getData: fn,
-       *  getModel: fn,
-       *  map: fn,
-       *  pick: fn,
-       *  pipe: fn,
-       *  prop: fn,
-       *  pushTo: fn,
-       *  reduce: fn,
-       *  setData: fn,
-       *  setModel: fn
-       * }
-       */
-   },
+    console.log(this.handler)
+    /**
+     * Outputs: Functions to handle models
+     * {
+     *  assignTo: fn,
+     *  compose: fn,
+     *  filter: fn,
+     *  for: fn,
+     *  getData: fn,
+     *  getModel: fn,
+     *  map: fn,
+     *  pick: fn,
+     *  pipe: fn,
+     *  prop: fn,
+     *  pushTo: fn,
+     *  reduce: fn,
+     *  setData: fn,
+     *  setModel: fn
+     * }
+     */
+  },
 }
 ```
 
@@ -66,21 +66,21 @@ _models.js_
 
 ```javascript
 return {
-   // called from Component.js. The Component instance is passed as a parameter using 'this' keyword
-   init: function (comp) {
-      this.handler = L.model(comp)
-      this.handler.setModel('Todos', []) // saves list of todos
-      this.handler.setModel('Todo', {}) // saves data for new todos
+  // called from Component.js. The Component instance is passed as a parameter using 'this' keyword
+  init: function (comp) {
+    this.handler = L.model(comp)
+    this.handler.setModel('Todos', []) // saves list of todos
+    this.handler.setModel('Todo', {}) // saves data for new todos
 
-      // All models are set to the Component when using 'this.handler', since the component was passed as an argument of L.model function.
+    // All models are set to the Component when using 'this.handler', since the component was passed as an argument of L.model function.
 
-      const Todos = comp.getModel('Todos')
+    const Todos = comp.getModel('Todos')
 
-      console.log(Todos.getData())
-      /**
-       * Outputs: []
-       */
-   },
+    console.log(Todos.getData())
+    /**
+     * Outputs: []
+     */
+  },
 }
 ```
 
@@ -94,28 +94,28 @@ _Todo.controller.js_
 
 ```javascript
 return {
-   addTodo: function () {
-      const Todos = models.handler.getModel('Todos')
-      const todos = L.clone(Todos.getData())
+  addTodo: function () {
+    const Todos = models.handler.getModel('Todos')
+    const todos = L.clone(Todos.getData())
 
-      const Todo = models.handler.getModel('Todo')
-      const todo = Todo.getData()
+    const Todo = models.handler.getModel('Todo')
+    const todo = Todo.getData()
 
-      todos.push({
-         id: 1,
-         description: todo.description,
-         checked: false,
-      })
+    todos.push({
+      id: 1,
+      description: todo.description,
+      checked: false,
+    })
 
-      console.log(todos)
-      /**
-       * Outputs: [{
-       *  id: 1
-       *  description: 'Do something',
-       *  checked: false
-       * }]
-       */
-   },
+    console.log(todos)
+    /**
+     * Outputs: [{
+     *  id: 1
+     *  description: 'Do something',
+     *  checked: false
+     * }]
+     */
+  },
 }
 ```
 
@@ -129,30 +129,30 @@ _Todo.controller.js_
 
 ```javascript
 return {
-   addTodo: function () {
-      const Todos = models.handler.getModel('Todos')
-      const todos = L.clone(Todos.getData())
+  addTodo: function () {
+    const Todos = models.handler.getModel('Todos')
+    const todos = L.clone(Todos.getData())
 
-      const Todo = models.handler.getModel('Todo')
-      const todo = Todo.getData()
+    const Todo = models.handler.getModel('Todo')
+    const todo = Todo.getData()
 
-      todos.push({
-         id: 1,
-         description: todo.description,
-         checked: false,
-      })
+    todos.push({
+      id: 1,
+      description: todo.description,
+      checked: false,
+    })
 
-      models.handler.setData('Todos', todos)
+    models.handler.setData('Todos', todos)
 
-      console.log(Todos.getData())
-      /**
-       * Outputs: [{
-       *  id: 1
-       *  description: 'Do something',
-       *  checked: false
-       * }]
-       */
-   },
+    console.log(Todos.getData())
+    /**
+     * Outputs: [{
+     *  id: 1
+     *  description: 'Do something',
+     *  checked: false
+     * }]
+     */
+  },
 }
 ```
 
@@ -166,27 +166,27 @@ _Todo.controller.js_
 
 ```javascript
 return {
-   addTodo: function () {
-      const todos = models.handler.getData('Todos')
-      const todo = models.handler.getData('Todo')
+  addTodo: function () {
+    const todos = models.handler.getData('Todos')
+    const todo = models.handler.getData('Todo')
 
-      todos.push({
-         id: 1,
-         description: todo.description,
-         checked: false,
-      })
+    todos.push({
+      id: 1,
+      description: todo.description,
+      checked: false,
+    })
 
-      models.handler.setData('Todos', todos)
+    models.handler.setData('Todos', todos)
 
-      console.log(models.handler.getData('Todos'))
-      /**
-       * Outputs: [{
-       *  id: 1
-       *  description: 'Do something',
-       *  checked: false
-       * }]
-       */
-   },
+    console.log(models.handler.getData('Todos'))
+    /**
+     * Outputs: [{
+     *  id: 1
+     *  description: 'Do something',
+     *  checked: false
+     * }]
+     */
+  },
 }
 ```
 
@@ -202,35 +202,35 @@ _Todo.controller.js_
 
 ```javascript
 return {
-   addTodo: function () {
-      const Todo = models.handler.getModel('Todo')
+  addTodo: function () {
+    const Todo = models.handler.getModel('Todo')
 
-      const todos = models.handler.getData('Todo')
-      const todo = models.handler.getData('Todo')
+    const todos = models.handler.getData('Todo')
+    const todo = models.handler.getData('Todo')
 
-      todos.push({
-         id: 1,
-         description: todo.description,
-         checked: false,
-      })
+    todos.push({
+      id: 1,
+      description: todo.description,
+      checked: false,
+    })
 
-      models.handler.setData('Todos', todos)
+    models.handler.setData('Todos', todos)
 
-      console.log(Todo.getData())
-      /**
-       * Outputs: { description: 'Do something' }
-       */
+    console.log(Todo.getData())
+    /**
+     * Outputs: { description: 'Do something' }
+     */
 
-      models.handler.assignTo('Todo', {
-         description: '',
-         newProp: 'Hello',
-      })
+    models.handler.assignTo('Todo', {
+      description: '',
+      newProp: 'Hello',
+    })
 
-      console.log(Todo.getData())
-      /**
-       * Outputs: { description: '', newProp: 'Hello' }
-       */
-   },
+    console.log(Todo.getData())
+    /**
+     * Outputs: { description: '', newProp: 'Hello' }
+     */
+  },
 }
 ```
 
@@ -244,24 +244,24 @@ _Todo.controller.js_
 
 ```javascript
 return {
-   addTodo: function () {
-      const todo = models.handler.getData('Todo')
+  addTodo: function () {
+    const todo = models.handler.getData('Todo')
 
-      models.handler.pushTo('Todos', {
-         id: 1,
-         description: todo.description,
-         checked: false,
-      })
+    models.handler.pushTo('Todos', {
+      id: 1,
+      description: todo.description,
+      checked: false,
+    })
 
-      console.log(models.handler.getData('Todos'))
-      /**
-       * Outputs: [{
-       *  id: 1
-       *  description: 'Do something',
-       *  checked: false
-       * }]
-       */
-   },
+    console.log(models.handler.getData('Todos'))
+    /**
+     * Outputs: [{
+     *  id: 1
+     *  description: 'Do something',
+     *  checked: false
+     * }]
+     */
+  },
 }
 ```
 
@@ -279,16 +279,16 @@ _models.js_
 
 ```javascript
 return {
-   Todos: undefined,
-   Todo: undefined,
+  Todos: undefined,
+  Todo: undefined,
 
-   // called from Component.js. The Component instance is passed as a parameter using 'this' keyword
-   init: function (comp) {
-      this.Todos = L.model(comp).for('Todos')
-      this.Todo = L.model(comp).for('Todo')
+  // called from Component.js. The Component instance is passed as a parameter using 'this' keyword
+  init: function (comp) {
+    this.Todos = L.model(comp).for('Todos')
+    this.Todo = L.model(comp).for('Todo')
 
-      this.Todos.setData([])
-   },
+    this.Todos.setData([])
+  },
 }
 ```
 
@@ -298,24 +298,24 @@ _Todo.controller.js_
 
 ```javascript
 return {
-   addTodo: function () {
-      const { description } = models.Todo.getData()
+  addTodo: function () {
+    const { description } = models.Todo.getData()
 
-      models.Todos.pushTo({
-         id: 1,
-         description: description,
-         checked: false,
-      })
+    models.Todos.pushTo({
+      id: 1,
+      description: description,
+      checked: false,
+    })
 
-      console.log(models.Todos.getData())
-      /**
-       * Outputs: [{
-       *  id: 1
-       *  description: 'Do something',
-       *  checked: false
-       * }]
-       */
-   },
+    console.log(models.Todos.getData())
+    /**
+     * Outputs: [{
+     *  id: 1
+     *  description: 'Do something',
+     *  checked: false
+     * }]
+     */
+  },
 }
 ```
 
@@ -330,24 +330,24 @@ _Todo.controller.js_
 
 ```javascript
 return {
-   addTodo: function () {
-      const description = models.Todo.prop('description')
+  addTodo: function () {
+    const description = models.Todo.prop('description')
 
-      models.Todos.pushTo({
-         id: 1,
-         description,
-         checked: false,
-      })
+    models.Todos.pushTo({
+      id: 1,
+      description,
+      checked: false,
+    })
 
-      console.log(models.Todos.getData())
-      /**
-       * Outputs: [{
-       *  id: 1
-       *  description: 'Do something',
-       *  checked: false
-       * }]
-       */
-   },
+    console.log(models.Todos.getData())
+    /**
+     * Outputs: [{
+     *  id: 1
+     *  description: 'Do something',
+     *  checked: false
+     * }]
+     */
+  },
 }
 ```
 
@@ -362,35 +362,35 @@ _Todo.controller.js_
 
 ```javascript
 return {
-   addTodo: function () {
-      const description = models.Todo.prop('description')
+  addTodo: function () {
+    const description = models.Todo.prop('description')
 
-      models.Todos.pushTo({
-         id: 1,
-         description,
-         checked: false,
-      })
+    models.Todos.pushTo({
+      id: 1,
+      description,
+      checked: false,
+    })
 
-      models.Todos.pushTo({
-         id: 2,
-         description,
-         checked: true,
-      })
+    models.Todos.pushTo({
+      id: 2,
+      description,
+      checked: true,
+    })
 
-      const data = models.Todos.pick(['id', 'checked'])
+    const data = models.Todos.pick(['id', 'checked'])
 
-      console.log(data)
-      /**
-       * Outputs: [{
-       *  id: 1,
-       *  checked: false
-       * },
-       * {
-       *  id: 2,
-       *  checked: true
-       * }]
-       */
-   },
+    console.log(data)
+    /**
+     * Outputs: [{
+     *  id: 1,
+     *  checked: false
+     * },
+     * {
+     *  id: 2,
+     *  checked: true
+     * }]
+     */
+  },
 }
 ```
 
@@ -404,37 +404,37 @@ _Todo.controller.js_
 
 ```javascript
 return {
-   addTodo: function () {
-      const description = models.Todo.prop('description')
+  addTodo: function () {
+    const description = models.Todo.prop('description')
 
-      models.Todos.pushTo({
-         id: 1,
-         description,
-         checked: false,
-      })
+    models.Todos.pushTo({
+      id: 1,
+      description,
+      checked: false,
+    })
 
-      models.Todos.pushTo({
-         id: 2,
-         description,
-         checked: true,
-      })
+    models.Todos.pushTo({
+      id: 2,
+      description,
+      checked: true,
+    })
 
-      const getCompletedOnly = todo => todo.checked
-      /**
-       * Could be:
-       * const getCompletedOnly = L.prop('checked')
-       */
+    const getCompletedOnly = todo => todo.checked
+    /**
+     * Could be:
+     * const getCompletedOnly = L.prop('checked')
+     */
 
-      const data = models.Todos.filter(getCompletedOnly)
+    const data = models.Todos.filter(getCompletedOnly)
 
-      console.log(data)
-      /**
-       * Outputs: [{
-       *  id: 2,
-       *  checked: true
-       * }]
-       */
-   },
+    console.log(data)
+    /**
+     * Outputs: [{
+     *  id: 2,
+     *  checked: true
+     * }]
+     */
+  },
 }
 ```
 
@@ -448,34 +448,34 @@ _Todo.controller.js_
 
 ```javascript
 return {
-   addTodo: function () {
-      const description = models.Todo.prop('description')
+  addTodo: function () {
+    const description = models.Todo.prop('description')
 
-      models.Todos.pushTo({
-         id: 1,
-         description,
-         checked: false,
-      })
+    models.Todos.pushTo({
+      id: 1,
+      description,
+      checked: false,
+    })
 
-      models.Todos.pushTo({
-         id: 2,
-         description: 'My Description',
-         checked: true,
-      })
+    models.Todos.pushTo({
+      id: 2,
+      description: 'My Description',
+      checked: true,
+    })
 
-      const getDescriptions = todo => todo.description
-      /**
-       * Could be:
-       * const getDescriptions = L.prop('description')
-       */
+    const getDescriptions = todo => todo.description
+    /**
+     * Could be:
+     * const getDescriptions = L.prop('description')
+     */
 
-      const data = models.Todos.map(getDescriptions)
+    const data = models.Todos.map(getDescriptions)
 
-      console.log(data)
-      /**
-       * Outputs: ['Do something', 'My Description']
-       */
-   },
+    console.log(data)
+    /**
+     * Outputs: ['Do something', 'My Description']
+     */
+  },
 }
 ```
 
@@ -489,30 +489,87 @@ _Todo.controller.js_
 
 ```javascript
 return {
-   addTodo: function () {
-      const description = models.Todo.prop('description')
+  addTodo: function () {
+    const description = models.Todo.prop('description')
 
-      models.Todos.pushTo({
-         id: 1,
-         description,
-         checked: false,
-      })
+    models.Todos.pushTo({
+      id: 1,
+      description,
+      checked: false,
+    })
 
-      models.Todos.pushTo({
-         id: 2,
-         description: 'My Description',
-         checked: true,
-      })
+    models.Todos.pushTo({
+      id: 2,
+      description: 'My Description',
+      checked: true,
+    })
 
-      // There are better ways of doing it, this is just for demonstration purposes
-      const checkIfAllCompleted = (result, todo) => result && todo.checked
+    // There are better ways of doing it, this is just for demonstration purposes
+    const checkIfAllCompleted = (result, todo) => result && todo.checked
 
-      const result = models.Todos.reduce(checkIfAllCompleted, true)
+    const result = models.Todos.reduce(checkIfAllCompleted, true)
 
-      console.log(result)
-      /**
-       * Outputs: false
-       */
-   },
+    console.log(result)
+    /**
+     * Outputs: false
+     */
+  },
+}
+```
+
+## getModelPromise : s => n => Promise
+
+Given a model name **s**, return a promise to the given model, which resolves with the model data whenever the model is set.
+
+**Usage**
+
+_models.js_
+
+```javascript
+let component
+
+return {
+  init: function (comp) {
+    component = comp
+  },
+
+  getHandler: function () {
+    return L.model(component)
+  },
+
+  getTodosFromAPI: () =>
+    new Promise(res => {
+      setTimeout(() => {
+        res([
+          {
+            id: 0,
+            description: 'Do something with this data',
+            checked: false,
+          },
+        ])
+      }, 2000)
+    }),
+}
+```
+
+_Todo.controller.js_
+
+```javascript
+return {
+  onInit: function () {
+    const handler = models.getHandler()
+
+    const setTodosToModels = () => {
+      models.Todos = handler.for('Todos')
+    }
+
+    // Although the model isn't set, it won't throw an error
+    handler
+      .getModelPromise('Todos')
+      .then(console.log) // Outputs: [{ id: 0, description: 'Do something with this data', checked: false }]
+      .finally(setTodosToModels)
+
+    models.getTodosFromAPI().then(handler.setModel('Todos')) // Here the model is set
+  },
 }
 ```
