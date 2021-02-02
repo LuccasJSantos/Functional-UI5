@@ -19,26 +19,22 @@ const ui5 = {
   compose: require('./compose'),
   pipe: require('./pipe'),
   prop: require('./prop'),
-  pick: require('./pick')
+  pick: require('./pick'),
+  applyTo: require('./applyTo'),
 }
 
-module.exports = curry(
-  parent => ({
-    ...pairWrap(
-      map(([k, fn]) => [k, fn(parent)])
-    )(ui5),
-    for: curry(
-      name => {
-        const model = getModel(parent, name)
-        if (!model) {
-          setModel(parent, name, undefined)
-        }
+module.exports = curry(parent => ({
+  ...pairWrap(map(([k, fn]) => [k, fn(parent)]))(ui5),
+  for: curry(name => {
+    const model = getModel(parent, name)
+    if (!model) {
+      setModel(parent, name, undefined)
+    }
 
-        const filteredOutFns = dissoc ('getModelPromise') (ui5)
+    const filteredOutFns = dissoc('getModelPromise')(ui5)
 
-        return pairWrap(
-          map(([k, fn]) => [k, fn.bind(null, parent, name)])
-        )(filteredOutFns)
-      }
+    return pairWrap(map(([k, fn]) => [k, fn.bind(null, parent, name)]))(
+      filteredOutFns,
     )
-  }))
+  }),
+}))
