@@ -1,6 +1,6 @@
 🚧 **Work in progress**
 
-A bunch of general purpose and UI5 focused functional helpers to be used within SAPUI5 environment.
+A bunch of general purpose and UI5 focused functional helpers to be used within SAPUI5 and non-SAPUI5 environment.
 It can be easily imported just like the `utilities.js` file on controllers.
 
 All functions are **curried**, meaning that if the calling function **was not provided** with all the required arguments, **it will return another function** that expects the remaining arguments.
