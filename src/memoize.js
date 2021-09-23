@@ -1,13 +1,20 @@
-module.exports = fn => {
-  const cache = {}
+module.exports = (fn, lifespan = 2000) => {
+  const memos = {}
 
   return (...args) => {
-    const prop = JSON.stringify(args)
+    const key = `${fn.name}(${JSON.stringify(args)})`
 
-    if (cache[prop]) return cache[prop]
+    if (!(key in memos)) {
+      memos[key] = {}
+      memos[key].value = fn(...args)
+    } else {
+      clearTimeout(memos[key].lifespan)
+    }
 
-    cache[prop] = fn(...args)
+    if (lifespan !== false) {
+      memos[key].lifespan = setTimeout(() => { delete memos[key] }, lifespan)
+    }
 
-    return cache[prop]
+    return memos[key].value
   }
 }
