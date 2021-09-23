@@ -1,22 +1,26 @@
 {
-    "env": {
-      "commonjs": true,
-      "es2020": true,
-      "node": true
-    },
-    "extends": [
-      "standard"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 11
-    },
-    "rules": {
-      "curly": "off",
-      "no-extend-native": "off",
-      "func-call-spacing": "off",
-      "comma-dangle": "off"
-    },
-    "globals": {
-      "sap": "readonly"
-    }
+  "env": {
+    "commonjs": true,
+    "es2020": true,
+    "node": true,
+    "jest/globals": true
+  },
+  "extends": [
+    "standard"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 11
+  },
+  "plugins": [
+    "jest"
+  ],
+  "rules": {
+    "curly": "off",
+    "no-extend-native": "off",
+    "func-call-spacing": "off",
+    "comma-dangle": "off"
+  },
+  "globals": {
+    "sap": "readonly"
+  }
 }

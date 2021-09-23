@@ -1,1 +1,1 @@
-module.exports = arr => arr.slice(-1)
+module.exports = arr => arr.slice(-1)[0]

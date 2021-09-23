@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"test": "jest --coverage",
 		"build": "webpack && babel dist/L.bundle.js --out-dir dist",
 		"start": "nodemon test/index.js"
 	},
@@ -19,13 +19,16 @@
 		"@babel/plugin-transform-parameters": "^7.10.5",
 		"@babel/plugin-transform-spread": "^7.11.0",
 		"@babel/plugin-transform-template-literals": "^7.10.5",
+		"@types/jest": "^27.0.1",
 		"babel-preset-minify": "^0.5.1",
 		"eslint": "^7.7.0",
 		"eslint-config-standard": "^14.1.1",
 		"eslint-plugin-import": "^2.22.0",
+		"eslint-plugin-jest": "^24.4.0",
 		"eslint-plugin-node": "^11.1.0",
 		"eslint-plugin-promise": "^4.2.1",
 		"eslint-plugin-standard": "^4.0.1",
+		"jest": "^27.0.6",
 		"nodemon": "^2.0.4",
 		"webpack": "^4.44.1",
 		"webpack-cli": "^3.3.12"
