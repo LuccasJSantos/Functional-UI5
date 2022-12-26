@@ -25,15 +25,15 @@ const ui5 = {
 
 module.exports = curry(parent => ({
   ...map((fn, k) => [k, fn(parent)])(ui5),
-  for: curry(name => {
+  for: (name, value = undefined) => {
     const model = getModel(parent, name)
     if (!model) {
-      setModel(parent, name, undefined)
+      setModel(parent, name, value)
     }
 
     const filteredOutFns = dissoc('getModelPromise')(ui5)
 
     return map((fn) => fn.bind(null, parent, name))
               (filteredOutFns)
-  }),
+  },
 }))
