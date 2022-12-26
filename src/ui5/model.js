@@ -24,7 +24,7 @@ const ui5 = {
 }
 
 module.exports = curry(parent => ({
-  ...pairWrap(map(([k, fn]) => [k, fn(parent)]))(ui5),
+  ...map((fn, k) => [k, fn(parent)])(ui5),
   for: curry(name => {
     const model = getModel(parent, name)
     if (!model) {
@@ -33,8 +33,7 @@ module.exports = curry(parent => ({
 
     const filteredOutFns = dissoc('getModelPromise')(ui5)
 
-    return pairWrap(map(([k, fn]) => [k, fn.bind(null, parent, name)]))(
-      filteredOutFns,
-    )
+    return map((fn) => fn.bind(null, parent, name))
+              (filteredOutFns)
   }),
 }))

@@ -1,9 +1,8 @@
 const curry = require('./curry')
 const filter = require('./filter')
-const composePairs = require('./composePairs')
 
-const out = prop => ([k]) => k !== prop
+const out = prop => (_, k) => k !== prop
 
 module.exports = curry(
-  (prop, obj) => composePairs (filter (out (prop))) (obj)
+  (prop, obj) => filter (out (prop)) (obj)
 )
