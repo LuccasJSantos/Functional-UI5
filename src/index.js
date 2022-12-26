@@ -11,7 +11,6 @@ const lib = {
   call: require('./call'),
   clone: require('./clone'),
   compose: require('./compose'),
-  composePairs: require('./composePairs'),
   cond: require('./cond'),
   constant: require('./constant'),
   curry: require('./curry'),
@@ -67,6 +66,7 @@ const lib = {
   toUpper: require('./toUpper'),
   undef: require('./undef'),
   unless: require('./unless'),
+  values: require('./values'),
   when: require('./when')
 }
 
